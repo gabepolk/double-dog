@@ -1,5 +1,6 @@
 module DoubleDog
   class SeeAllOrders < DoubleDog::Script
+
     def run(params)
       return failure(:not_admin) unless admin_session?(params[:admin_session])
 

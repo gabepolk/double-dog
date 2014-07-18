@@ -1,5 +1,6 @@
 module DoubleDog
   class CreateOrder < DoubleDog::Script
+
     def run(params)
       user = DoubleDog.db.get_user_by_session_id(params[:session_id])
       return failure(:invalid_session) if user.nil?
