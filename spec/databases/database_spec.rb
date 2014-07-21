@@ -6,7 +6,6 @@ shared_examples 'a database' do
   describe 'users' do
     it 'persists and gets' do
       user = DoubleDog::User.new(nil, 'Dan', '123')
-      # binding.pry
       db.persist_user(user)
       expect(user.id).to_not be_nil
 
@@ -18,7 +17,7 @@ shared_examples 'a database' do
   end
 
   describe 'items' do
-    xit 'persists and gets' do
+    it 'persists and gets' do
       item = DoubleDog::Item.new(nil, 'burger', 18)
       db.persist_item(item)
       expect(item.id).to_not be_nil

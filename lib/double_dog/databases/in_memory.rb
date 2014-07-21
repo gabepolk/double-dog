@@ -25,6 +25,33 @@ module DoubleDog
         User.new(attrs[:id], attrs[:username], attrs[:password], attrs[:admin])
       end
 
+      def persist_user(user)
+        new_id = (@users_id_counter += 1)
+        attrs = {
+          :id => new_id,
+          :username => user.username,
+          :password => user.password,
+          :admin => user.admin
+        }
+
+        @users[new_id] = attrs
+
+        user.instance_variable_set("@id", new_id)
+      end
+
+      def persist_item(item)
+        new_id = (@item_id_counter +=1)
+        attrs = {
+          :id => new_id,
+          :name => item.name,
+          :price => item.price
+        }
+
+        @items[new_id] = attrs
+
+        item.instance_variable_set("@id", new_id)
+      end
+
       def create_session(attrs)
         new_id = (@sessions_id_counter += 1)
         @sessions[new_id] = attrs

@@ -1,6 +1,7 @@
 module DoubleDog
   class User
-    attr_reader :id, :username, :password, :admin
+    attr_reader :username, :password, :admin
+    attr_accessor :id
 
     def initialize(id, username, password, admin=false)
       @id = id

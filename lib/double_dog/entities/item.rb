@@ -1,6 +1,7 @@
 module DoubleDog
   class Item
-    attr_reader :id, :name, :price
+    attr_reader :name, :price
+    attr_accessor :id
 
     def initialize(id, name, price)
       @id = id
