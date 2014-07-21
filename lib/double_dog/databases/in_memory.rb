@@ -11,6 +11,8 @@ module DoubleDog
         @item_id_counter = 500
         @orders = {}
         @order_id_counter = 600
+        @order_items = {}
+        @order_items_id_counter = 700
       end
 
       def create_user(attrs)
@@ -37,19 +39,6 @@ module DoubleDog
         @users[new_id] = attrs
 
         user.instance_variable_set("@id", new_id)
-      end
-
-      def persist_item(item)
-        new_id = (@item_id_counter +=1)
-        attrs = {
-          :id => new_id,
-          :name => item.name,
-          :price => item.price
-        }
-
-        @items[new_id] = attrs
-
-        item.instance_variable_set("@id", new_id)
       end
 
       def create_session(attrs)
@@ -83,6 +72,19 @@ module DoubleDog
         Item.new(attrs[:id], attrs[:name], attrs[:price])
       end
 
+      def persist_item(item)
+        new_id = (@item_id_counter += 1)
+        attrs = {
+          :id => new_id,
+          :name => item.name,
+          :price => item.price
+        }
+
+        @items[new_id] = attrs
+
+        item.instance_variable_set("@id", new_id)
+      end
+
       def all_items
         @items.values.map do |attrs|
           Item.new(attrs[:id], attrs[:name], attrs[:price])
@@ -99,6 +101,22 @@ module DoubleDog
       def get_order(id)
         attrs = @orders[id]
         Order.new(attrs[:id], attrs[:employee_id], attrs[:items])
+      end
+
+      def persist_order(order)
+        order.items.each do |item|
+          persist_item(item)
+        end
+        new_id = (@order_id_counter += 1)
+        attrs = {
+          :id => new_id,
+          :employee_id => order.employee_id,
+          :items => order.items
+        }
+
+        @orders[new_id] = attrs
+
+        order.instance_variable_set("@id", new_id)
       end
 
       def all_orders

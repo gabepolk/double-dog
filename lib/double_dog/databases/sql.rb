@@ -41,6 +41,19 @@ module DoubleDog
         ar_item = Item.find_by(id: item_id)
       end
 
+      def persist_order(order)
+        ar_order = Order.create(employee_id: order.employee_id)
+        order.items.each do |item|
+          persist_item(item)
+          OrderItem.create(order_id: ar_order.id, item_id: item.id)
+        end
+        order.id = ar_order.id
+      end
+
+      def get_order(order_id)
+        ar_order = Order.find_by(id: order_id)
+      end
+
     end
   end
 end

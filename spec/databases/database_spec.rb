@@ -29,16 +29,18 @@ shared_examples 'a database' do
   end
 
   describe 'order' do
-    xit 'persists and gets' do
+    it 'persists and gets' do
       item1 = DoubleDog::Item.new(nil, 'burger', 18)
       item2 = DoubleDog::Item.new(nil, 'fries', 2)
-      order = DoubleDog::Order.new(nil, nil, [item1, item2])
+      order = DoubleDog::Order.new(nil, 1, [item1, item2])
       db.persist_order(order)
       expect(order.id).to_not be_nil
 
       retrieved_order = db.get_order(order.id)
       expect(retrieved_order.employee_id).to eq(1)
-      expect(retrieved_order.items[1].name).to eq('burger')
+      expect(retrieved_order.items.count).to eq(2)
+      expect(retrieved_order.items[0].name).to eq('burger')
+      expect(retrieved_order.items[1].name).to eq('fries')
     end
   end
 
