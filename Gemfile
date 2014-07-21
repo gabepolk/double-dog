@@ -7,4 +7,5 @@ group :test do
   gem 'activerecord'
   gem 'sqlite3'
   gem 'pg'
+  gem 'active_record_tasks', '~> 1.1.0'
 end
