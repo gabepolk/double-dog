@@ -1,5 +1,5 @@
 module DoubleDog
-  module Databases
+  module Database
     class InMemory
 
       def initialize

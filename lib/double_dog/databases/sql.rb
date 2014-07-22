@@ -1,7 +1,7 @@
 require 'active_record'
 
 module DoubleDog
-  module Databases
+  module Database
     class SQL
       class User < ActiveRecord::Base
         has_many :orders

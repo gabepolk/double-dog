@@ -1,5 +1,5 @@
 module DoubleDog
-  class CreateOrder < DoubleDog::Script
+  class CreateOrder < TransactionScript
 
     def run(params)
       user = DoubleDog.db.get_user_by_session_id(params[:session_id])
