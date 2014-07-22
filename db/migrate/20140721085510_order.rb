@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Migration
   def change
     create_table :orders do |t|
-      t.integer :employee_id
+      t.references :user, index: true
     end
   end
 end

@@ -5,12 +5,7 @@ module DoubleDog
     class SQL
       class User < ActiveRecord::Base
         has_many :orders
-      end
-
-      class Order < ActiveRecord::Base
-        has_many :order_items
-        has_many :items, through: :order_items
-        belongs_to :user
+        has_one :session
       end
 
       class Item < ActiveRecord::Base
@@ -18,21 +13,31 @@ module DoubleDog
         has_many :orders, through: :order_items
       end
 
+      class Order < ActiveRecord::Base
+        belongs_to :user
+        has_many :order_items
+        has_many :items, through: :order_items
+      end
+
       class OrderItem < ActiveRecord::Base
         belongs_to :item
         belongs_to :order
       end
 
-      def persist_user(user)
-        ar_user = User.create(username: user.username, password: user.password, admin: user.admin)
-        user.id = ar_user.id
+      class Session < ActiveRecord::Base
+        belongs_to :user
+      end
+
+      def create_user(attrs)
+        ar_user = User.create(attrs)
+        DoubleDog::User.new(ar_user.id, ar_user.username, ar_user.password, ar_user.admin)
       end
 
       def get_user(user_id)
         ar_user = User.find_by(id: user_id)
       end
 
-      def persist_item(item)
+      def create_item(item)
         ar_item = Item.create(name: item.name, price: item.price)
         item.id = ar_item.id
       end
@@ -52,6 +57,14 @@ module DoubleDog
 
       def get_order(order_id)
         ar_order = Order.find_by(id: order_id)
+      end
+
+      def reset_tables
+        Item.destroy_all
+        User.destroy_all
+        Order.destroy_all
+        OrderItem.destroy_all
+        Session.destroy_all
       end
 
     end

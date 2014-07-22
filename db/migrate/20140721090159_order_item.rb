@@ -1,8 +1,8 @@
 class OrderItem < ActiveRecord::Migration
   def change
     create_table :order_items do |t|
-      t.integer :order_id
-      t.integer :item_id
+      t.references :order, index: true
+      t.references :item, index: true
     end
   end
 end

@@ -11,7 +11,7 @@ shared_examples 'a database' do
     expect(user.admin?).to eq false
   end
 
-  it "creates an admin user" do
+  xit "creates an admin user" do
     user = db.create_user(:username => 'alice', :password => 'pass1', :admin => true)
     expect(user.id).to_not be_nil
     expect(user.username).to eq 'alice'
@@ -19,19 +19,19 @@ shared_examples 'a database' do
     expect(user.admin?).to eq true
   end
 
-  it "retrieves a user" do
+  xit "retrieves a user" do
     user = db.create_user(:username => 'bob', :password => 'pass2')
     retrieved_user = db.get_user(user.id)
     expect(retrieved_user.username).to eq 'bob'
     expect(retrieved_user.has_password? 'pass2').to eq true
   end
 
-  it "creates a session and returns its id" do
+  xit "creates a session and returns its id" do
     session_id = db.create_session(:user_id => 8)
     expect(session_id).to_not be_a Hash
   end
 
-  it "retrieves a user by username" do
+  xit "retrieves a user by username" do
     user = db.create_user(:username => 'pim', :password => 'cookies')
     retrieved_user = db.get_user_by_username(user.username)
 
@@ -39,7 +39,7 @@ shared_examples 'a database' do
     expect(retrieved_user.has_password? 'cookies').to eq true
   end
 
-  it "retrieves a user by session id" do
+  xit "retrieves a user by session id" do
     user = db.create_user(:username => 'sally', :password => 'seashells')
     session_id = db.create_session(:user_id => user.id)
 
@@ -48,7 +48,7 @@ shared_examples 'a database' do
     expect(retrieved_user.has_password? 'seashells').to eq true
   end
 
-  it "creates an item" do
+  xit "creates an item" do
     item = db.create_item(:name => 'hot dog', :price => 5)
     expect(item).to be_a DoubleDog::Item
 
@@ -57,7 +57,7 @@ shared_examples 'a database' do
     expect(item.price).to eq 5
   end
 
-  it "retrieves an item" do
+  xit "retrieves an item" do
     item = db.create_item(:name => 'hot dog', :price => 5)
 
     retrieved_item = db.get_item(item.id)
@@ -66,7 +66,7 @@ shared_examples 'a database' do
     expect(retrieved_item.price).to eq 5
   end
 
-  it "grabs all items" do
+  xit "grabs all items" do
     db.create_item(:name => 'fries', :price => 3)
     db.create_item(:name => 'pickle', :price => 4)
     db.create_item(:name => 'potato', :price => 8)
@@ -79,7 +79,7 @@ shared_examples 'a database' do
     expect(items.map &:price).to include(3, 4, 8)
   end
 
-  it "creates an order" do
+  xit "creates an order" do
     item_1 = db.create_item(:name => 'fries', :price => 3)
     item_2 = db.create_item(:name => 'pickle', :price => 4)
     item_3 = db.create_item(:name => 'potato', :price => 8)
@@ -92,7 +92,7 @@ shared_examples 'a database' do
     expect(order.employee_id).to eq(emp.id)
   end
 
-  it "retrieves an order" do
+  xit "retrieves an order" do
     item_1 = db.create_item(:name => 'fries', :price => 3)
     item_2 = db.create_item(:name => 'pickle', :price => 4)
     item_3 = db.create_item(:name => 'potato', :price => 8)
@@ -105,7 +105,7 @@ shared_examples 'a database' do
     expect(retrieved_order.items).to include(item_1, item_2, item_3)
   end
 
-  it "grabs all orders" do
+  xit "grabs all orders" do
     item_1 = db.create_item(:name => 'fries', :price => 3)
     item_2 = db.create_item(:name => 'pickle', :price => 4)
     item_3 = db.create_item(:name => 'potato', :price => 8)
@@ -131,6 +131,7 @@ end
 describe DoubleDog::Database::SQL do
   it_behaves_like 'a database'
   before(:each) do
+    # binding.pry
     db.reset_tables
   end
 end
