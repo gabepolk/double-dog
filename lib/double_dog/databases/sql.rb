@@ -79,8 +79,9 @@ module DoubleDog
         DoubleDog::Order.new(ar_order.id, ar_order.user_id, attrs[:items])
       end
 
-      def get_order(order_id)
-        ar_order = Order.find_by(id: order_id)
+      def get_order(id)
+        ar_order = Order.find(id)
+        build_order(ar_order)
       end
 
       def reset_tables
@@ -89,6 +90,22 @@ module DoubleDog
         Order.destroy_all
         OrderItem.destroy_all
         Session.destroy_all
+      end
+
+      def all_orders
+        ar_orders = Order.all
+        ar_orders.map do |ar_order|
+          build_order(ar_order)
+        end
+      end
+
+      private
+      def build_order(ar_order)
+        ar_items = ar_order.items
+        items = ar_items.map do |ar_item|
+          DoubleDog::Item.new(ar_item.id, ar_item.name, ar_item.price)
+        end
+        DoubleDog::Order.new(ar_order.id, ar_order.user_id, items)
       end
 
     end

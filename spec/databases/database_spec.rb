@@ -91,7 +91,7 @@ shared_examples 'a database' do
     expect(order.employee_id).to eq(emp.id)
   end
 
-  xit "retrieves an order" do
+  it "retrieves an order" do
     item_1 = db.create_item(:name => 'fries', :price => 3)
     item_2 = db.create_item(:name => 'pickle', :price => 4)
     item_3 = db.create_item(:name => 'potato', :price => 8)
@@ -101,10 +101,12 @@ shared_examples 'a database' do
     retrieved_order = db.get_order(order.id)
     expect(retrieved_order).to be_a DoubleDog::Order
     expect(retrieved_order.employee_id).to eq(emp.id)
-    expect(retrieved_order.items).to include(item_1, item_2, item_3)
+    expect(retrieved_order.items[0].name).to eq(item_1.name)
+    expect(retrieved_order.items[1].name).to eq(item_2.name)
+    expect(retrieved_order.items[2].name).to eq(item_3.name)
   end
 
-  xit "grabs all orders" do
+  it "grabs all orders" do
     item_1 = db.create_item(:name => 'fries', :price => 3)
     item_2 = db.create_item(:name => 'pickle', :price => 4)
     item_3 = db.create_item(:name => 'potato', :price => 8)
@@ -130,7 +132,6 @@ end
 describe DoubleDog::Database::SQL do
   it_behaves_like 'a database'
   before(:each) do
-    # binding.pry
     db.reset_tables
   end
 end
