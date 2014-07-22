@@ -69,13 +69,14 @@ module DoubleDog
         end
       end
 
-      def persist_order(order)
-        ar_order = Order.create(employee_id: order.employee_id)
-        order.items.each do |item|
-          persist_item(item)
-          OrderItem.create(order_id: ar_order.id, item_id: item.id)
+      def create_order(attrs)
+        ar_order = Order.create(user_id: attrs[:employee_id])
+        ar_items = attrs[:items].map do |item|
+          Item.find(item.id)
         end
-        order.id = ar_order.id
+
+        ar_order.items = ar_items
+        DoubleDog::Order.new(ar_order.id, ar_order.user_id, attrs[:items])
       end
 
       def get_order(order_id)

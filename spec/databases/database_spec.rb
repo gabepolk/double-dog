@@ -78,7 +78,7 @@ shared_examples 'a database' do
     expect(items.map &:price).to include(3, 4, 8)
   end
 
-  xit "creates an order" do
+  it "creates an order" do
     item_1 = db.create_item(:name => 'fries', :price => 3)
     item_2 = db.create_item(:name => 'pickle', :price => 4)
     item_3 = db.create_item(:name => 'potato', :price => 8)
