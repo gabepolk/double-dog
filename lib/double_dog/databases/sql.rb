@@ -52,13 +52,21 @@ module DoubleDog
         DoubleDog::User.new(ar_user.id, ar_user.username, ar_user.password, ar_user.admin)
       end
 
-      def create_item(item)
-        ar_item = Item.create(name: item.name, price: item.price)
-        item.id = ar_item.id
+      def create_item(attrs)
+        ar_item = Item.create(attrs)
+        DoubleDog::Item.new(ar_item.id, ar_item.name, ar_item.price)
       end
 
       def get_item(item_id)
         ar_item = Item.find_by(id: item_id)
+        DoubleDog::Item.new(ar_item.id, ar_item.name, ar_item.price)
+      end
+
+      def all_items
+        ar_items = Item.all
+        ar_items.map do |ar_item|
+          DoubleDog::Item.new(ar_item.id, ar_item.name, ar_item.price)
+        end
       end
 
       def persist_order(order)

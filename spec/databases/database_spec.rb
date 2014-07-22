@@ -47,7 +47,7 @@ shared_examples 'a database' do
     expect(retrieved_user.has_password? 'seashells').to eq true
   end
 
-  xit "creates an item" do
+  it "creates an item" do
     item = db.create_item(:name => 'hot dog', :price => 5)
     expect(item).to be_a DoubleDog::Item
 
@@ -56,7 +56,7 @@ shared_examples 'a database' do
     expect(item.price).to eq 5
   end
 
-  xit "retrieves an item" do
+  it "retrieves an item" do
     item = db.create_item(:name => 'hot dog', :price => 5)
 
     retrieved_item = db.get_item(item.id)
@@ -65,7 +65,7 @@ shared_examples 'a database' do
     expect(retrieved_item.price).to eq 5
   end
 
-  xit "grabs all items" do
+  it "grabs all items" do
     db.create_item(:name => 'fries', :price => 3)
     db.create_item(:name => 'pickle', :price => 4)
     db.create_item(:name => 'potato', :price => 8)
