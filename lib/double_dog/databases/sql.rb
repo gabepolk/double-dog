@@ -35,6 +35,21 @@ module DoubleDog
 
       def get_user(user_id)
         ar_user = User.find_by(id: user_id)
+        DoubleDog::User.new(ar_user.id, ar_user.username, ar_user.password, ar_user.admin)
+      end
+
+      def create_session(attrs)
+        ar_session = Session.create(attrs)
+      end
+
+      def get_user_by_username(username)
+        ar_user = User.find_by(username: username)
+        DoubleDog::User.new(ar_user.id, ar_user.username, ar_user.password, ar_user.admin)
+      end
+
+      def get_user_by_session_id(session_id)
+        ar_user = Session.find_by(id: session_id).user
+        DoubleDog::User.new(ar_user.id, ar_user.username, ar_user.password, ar_user.admin)
       end
 
       def create_item(item)

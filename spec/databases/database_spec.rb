@@ -11,7 +11,7 @@ shared_examples 'a database' do
     expect(user.admin?).to eq false
   end
 
-  xit "creates an admin user" do
+  it "creates an admin user" do
     user = db.create_user(:username => 'alice', :password => 'pass1', :admin => true)
     expect(user.id).to_not be_nil
     expect(user.username).to eq 'alice'
@@ -19,19 +19,19 @@ shared_examples 'a database' do
     expect(user.admin?).to eq true
   end
 
-  xit "retrieves a user" do
+  it "retrieves a user" do
     user = db.create_user(:username => 'bob', :password => 'pass2')
     retrieved_user = db.get_user(user.id)
     expect(retrieved_user.username).to eq 'bob'
     expect(retrieved_user.has_password? 'pass2').to eq true
   end
 
-  xit "creates a session and returns its id" do
+  it "creates a session and returns its id" do
     session_id = db.create_session(:user_id => 8)
     expect(session_id).to_not be_a Hash
   end
 
-  xit "retrieves a user by username" do
+  it "retrieves a user by username" do
     user = db.create_user(:username => 'pim', :password => 'cookies')
     retrieved_user = db.get_user_by_username(user.username)
 
@@ -39,10 +39,9 @@ shared_examples 'a database' do
     expect(retrieved_user.has_password? 'cookies').to eq true
   end
 
-  xit "retrieves a user by session id" do
+  it "retrieves a user by session id" do
     user = db.create_user(:username => 'sally', :password => 'seashells')
     session_id = db.create_session(:user_id => user.id)
-
     retrieved_user = db.get_user_by_session_id(session_id)
     expect(retrieved_user.username).to eq 'sally'
     expect(retrieved_user.has_password? 'seashells').to eq true
