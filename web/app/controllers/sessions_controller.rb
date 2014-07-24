@@ -8,8 +8,7 @@ class SessionsController < ApplicationController
     if result[:success?]
       session[:session_id] = result[:session_id]
     else
-      binding.pry
-      redirect_to signin_path
+      redirect_to :back
     end
   end
 

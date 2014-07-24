@@ -13,11 +13,6 @@ class TransactionScript
     return { :success? => false, :error => error_name }
   end
 
-  # def valid_attribute?(attribute, num)
-  #   # attribute != nil && (attribute.class == Float ? attribute  >= num : attribute.length >= num)
-  #   attribute != nil && attribute.length >= num
-  # end
-
   def success(data)
     return data.merge(:success? => true)
   end
